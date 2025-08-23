@@ -29,8 +29,39 @@ export const Register=async(req,res)=>{
             maxAge:7*24*60*60*1000
 
         })
+      return res.status(201).json(user)
     } catch (error) {
-        
+        console.log("Registration Error")
+        return res.status(500).json({message:  `registration error is ${error}`})
     }
 
 }
+
+
+export const login=async(req,res,)=>{
+try {
+    let {email,password}=req.body;
+    const user=await User.findOne({email})
+    if(!user)
+    {
+        return res.status(404).json({message:"User not found"})
+    }
+    
+    const isMatch=await bcrypt.compare(password,user.password)
+    if(!isMatch){
+      return res.status(404).json({message:"password not correct"})
+    }
+    const token=await genToken(user._id)
+    res.cookie("token",token,{
+            httpOnly:true,
+            secure:false,
+            sameSite:"Strict",
+            maxAge:7*24*60*60*1000
+
+        })
+      return res.status(200).json(user)
+} catch (error) {
+    return res.status(500).json({message: `login error ${error}`})
+}
+}
+
