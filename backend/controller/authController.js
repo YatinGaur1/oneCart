@@ -13,10 +13,10 @@ export const Register=async(req,res)=>{
         if(!(validator.isEmail(email))){
             return res.status(400).json({message:"Enter Valid Credentials"})
         }
-        if(password.lenth<8){
+        if(password.length<8){
             return res.status(400).json({message:"Enter password at least 8 character"})
         }
-
+ 
         let hashedPassword= await bcrypt.hash(password,10)//for secure the password  
         
         const user=await User.create({name,email,password:hashedPassword});
