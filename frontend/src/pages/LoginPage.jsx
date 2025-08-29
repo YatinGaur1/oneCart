@@ -19,7 +19,7 @@ export const LoginPage=()=>{
         const result=await axios.post(serverUrl+'/api/auth/login',{email,password},{withCredentials:true})
         console.log(result.data)
       } catch (error) {
-        console.log(error)
+        console.log(error.response.data)
       }
   }
   return (

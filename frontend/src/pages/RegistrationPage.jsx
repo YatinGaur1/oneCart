@@ -21,7 +21,7 @@ try {
   const result=await axios.post(serverUrl+'/api/auth/Register',{name,email,password},{withCredentials:true})
   console.log(result.data)
 } catch (error) {
-  console.log(error)
+  console.log(error.response.data)
 }
   }
 
