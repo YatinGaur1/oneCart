@@ -75,3 +75,52 @@ export const logOut=async(req,res)=>{
     }
 }
 
+export const googleRegister=async(req,res)=>{
+    try {
+         const {name,email}=req.body;
+        const existUser= await User.findOne({email})
+        if(existUser){
+            return res.status(400).json({message:"User already Exist"})
+        }
+        
+        
+        const user=await User.create({name,email});
+
+        let token=await genToken(user._id)
+        res.cookie("token",token,{
+            httpOnly:true,
+            secure:false,
+            sameSite:"Strict",
+            maxAge:7*24*60*60*1000
+
+        })
+      return res.status(200).json(user)
+    } catch (error) {
+        console.log(" google Registration Error")
+        return res.status(500).json({message:  ` google registration error is ${error}`})
+    }
+    
+}
+
+export const googleLogin=async(req,res)=>{
+    try {
+           const {email}=req.body;
+    const user=await User.findOne({email})
+    if(!user)
+    {
+        return res.status(404).json({message:"User not found"})
+    }
+   
+    const token=await genToken(user._id)
+    res.cookie("token",token,{
+            httpOnly:true,
+            secure:false,
+            sameSite:"Strict",
+            maxAge:7*24*60*60*1000
+
+        })
+      return res.status(200).json(user)
+} catch (error) {
+    return res.status(500).json({message: `login error ${error}`})
+}
+}

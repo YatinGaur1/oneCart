@@ -6,6 +6,8 @@ import { IoEyeOff } from "react-icons/io5";
 import { useContext, useState } from "react";
 import { authDataContext } from "../context/AuthContext";
 import axios from "axios";
+import { signInWithPopup } from "firebase/auth";
+import { auth, provider } from "../utils/firebase";
 export const LoginPage=()=>{
   let [show,setShow]=useState(false)
   let[email,setEmail]=useState("")
@@ -21,6 +23,19 @@ export const LoginPage=()=>{
       } catch (error) {
         console.log(error.response.data)
       }
+  }
+
+  const googleLogIn=async()=>{
+   try {
+       const res=await signInWithPopup(auth,provider)
+       const user=res.user
+       const email=user.email
+       const result=await axios.post(serverUrl+'/api/auth/googleLogin',{email},{withCredentials:true})
+
+       console.log(result.data)
+   } catch (error) {
+    console.log(error)
+   }
   }
   return (
     <div className="w-[100vw] h-[100vh] bg-gradient-to-l from-[#141414] to-[#0c2025] text-[white] flex flex-col items-center justify-start">
@@ -39,7 +54,7 @@ export const LoginPage=()=>{
 
         <form action="" onSubmit={handleLogIn} className="w-[90%] h-[90%] flex flex-col items-center justify-start gap-[20px]">
 
-              <div className="w-[90%] h-[50px] bg-[#42656cae] rounded-lg flex items-center justify-center gap-[10px] py-[20px] cursor-pointer">
+              <div className="w-[90%] h-[50px] bg-[#42656cae] rounded-lg flex items-center justify-center gap-[10px] py-[20px] cursor-pointer" onClick={googleLogIn}>
                 <img src={google} alt="" className="w-[20px]"/>LogIn with Google
               </div>
 
