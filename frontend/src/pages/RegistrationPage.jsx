@@ -8,19 +8,20 @@ import { authDataContext } from "../context/AuthContext.jsx";
 import axios from "axios"
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../utils/firebase.js";
+import { axiosInstance } from "../utils/axios.js";
 
 export const RegistrationPage=()=>{
   let [show,setShow]=useState(false)
   let[name,setName]=useState("")
   let[email,setEmail]=useState("")
   let[password,setPassword]=useState("")
-  let {serverUrl}=useContext(authDataContext)
+  let {serverUrl}=useContext(authDataContext)//notused
   let navigate = useNavigate()
 
   const handleSignUpSubmit=async(e)=>{
     e.preventDefault() // page stop browser default behaviour mean stop reload page on event
 try {
-  const result=await axios.post(serverUrl+'/api/auth/Register',{name,email,password},{withCredentials:true})
+  const result=await axiosInstance.post('/auth/Register',{name,email,password})
   console.log(result.data)
 } catch (error) {
   console.log(error.response.data)
@@ -33,9 +34,8 @@ try {
       let user=res.user
       let name=user.displayName
       let email=user.email
-     const result=await axios.post(serverUrl+'/api/auth/googleRegister',{name,email},{withCredentials:true})
+     const result=await axiosInstance.post('/auth/googleRegister',{name,email})
      console.log(result.data)
-
     } catch (error) {
       console.log(error.response.data)
     }
