@@ -49,7 +49,7 @@ export const LoginPage=()=>{
       <div className="w-[100%] h-[80px] flex items-center justify-start px-[30px] gap-[7px] " >
         <img className="w-[60px] cursor-pointer"src={Logo} alt="NoImage"onClick={()=>navigate("/")}/>
         <h1 className="text-[22px] font-bold cursor-pointer " onClick={()=>navigate("/")}>OneCart</h1>
-      </div>
+      </div> 
 
       <div className=" w-[100%] h-[100px] flex items-center flex-col justify-center gap-[9px]">
         <span className="text-[25px] font-semibold">Login</span>
