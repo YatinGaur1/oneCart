@@ -5,6 +5,7 @@ import { IoEyeOutline } from "react-icons/io5";
 import { IoEyeOff } from "react-icons/io5";
 import { useContext, useState } from "react";
 import { authDataContext } from "../context/AuthContext";
+import { userDataContext } from "../context/UserContext";
 import axios from "axios";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../utils/firebase";
@@ -13,6 +14,7 @@ export const LoginPage=()=>{
   let[email,setEmail]=useState("")
   let[password,setPassword]=useState("")
   let {serverUrl}=useContext(authDataContext)
+  let {getCurrentUser}=useContext(userDataContext)
   let navigate = useNavigate()
 
   const handleLogIn=async(e)=>{
@@ -20,6 +22,8 @@ export const LoginPage=()=>{
       try {
         const result=await axios.post(serverUrl+'/api/auth/login',{email,password},{withCredentials:true})
         console.log(result.data)
+        getCurrentUser()
+        navigate('/')
       } catch (error) {
         console.log(error.response.data)
       }
@@ -31,8 +35,9 @@ export const LoginPage=()=>{
        const user=res.user
        const email=user.email
        const result=await axios.post(serverUrl+'/api/auth/googleLogin',{email},{withCredentials:true})
-
        console.log(result.data)
+       getCurrentUser()
+        navigate('/')
    } catch (error) {
     console.log(error)
    }

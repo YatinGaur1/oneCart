@@ -5,6 +5,7 @@ import { IoEyeOutline } from "react-icons/io5";
 import { IoEyeOff } from "react-icons/io5";
 import {  useContext, useState } from "react";
 import { authDataContext } from "../context/AuthContext.jsx";
+import { userDataContext } from "../context/UserContext.jsx";
 import axios from "axios"
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../utils/firebase.js";
@@ -16,6 +17,7 @@ export const RegistrationPage=()=>{
   let[email,setEmail]=useState("")
   let[password,setPassword]=useState("")
   let {serverUrl}=useContext(authDataContext)//notused
+  let {getCurrentUser}=useContext(userDataContext)
   let navigate = useNavigate()
 
   const handleSignUpSubmit=async(e)=>{
@@ -23,6 +25,8 @@ export const RegistrationPage=()=>{
 try {
   const result=await axiosInstance.post('/auth/Register',{name,email,password})
   console.log(result.data)
+  getCurrentUser()
+  navigate('/')
 } catch (error) {
   console.log(error.response.data)
 }
@@ -36,6 +40,8 @@ try {
       let email=user.email
      const result=await axiosInstance.post('/auth/googleRegister',{name,email})
      console.log(result.data)
+       getCurrentUser()
+      navigate('/')
     } catch (error) {
       console.log(error.response.data)
     }
@@ -76,7 +82,7 @@ try {
                     onChange={(e)=>{setPassword(e.target.value)}} value={password}
                     required className="w-[100%] h-[50px] border-[2px] border-[#96969635] backdrop-blur-sm rounded-lg shadow-lg bg-transparent placeholder-[#ffffffc7] px-[20px] font-semibold"/>
 
-                   {!show? <IoEyeOutline className=" w-[20px] h-[20px] cursor-pointer absolute right-[5%]" onClick={()=>setShow(prev => !prev)} />:<IoEyeOff className=" w-[20px] h-[20px] cursor-pointer absolute right-[5%]" onClick={()=>setShow(prev => !prev)}/>}
+                   {show? <IoEyeOutline className=" w-[20px] h-[20px] cursor-pointer absolute right-[5%]" onClick={()=>setShow(prev => !prev)} />:<IoEyeOff className=" w-[20px] h-[20px] cursor-pointer absolute right-[5%]" onClick={()=>setShow(prev => !prev)}/>}
 
                     <button className="w-[100%] h-[50px]  bg-[#1a879dae] rounded-lg flex items-center justify-center mt-[20px] text-[17px] font-semibold
                      cursor-pointer">Create Account</button>

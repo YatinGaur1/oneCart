@@ -8,13 +8,10 @@ function AuthContext({children}){
         serverUrl,
     }
 
-return(
-    <div>
-        
+return(       
      <authDataContext.Provider value={value}> 
         {children}
          </authDataContext.Provider>
-    </div>
 )
 }
 export default AuthContext;

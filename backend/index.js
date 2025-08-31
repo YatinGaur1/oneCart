@@ -4,6 +4,7 @@ import connectDB from "./config/db.js"
 import cookieParser from "cookie-parser"
 import authRoutes from "./route/authRoutes.js"
 import cors from 'cors'
+import userRoutes from "./route/userRoutes.js"
 dotenv.config()
 let port=process.env.PORT||6000
 
@@ -17,6 +18,8 @@ app.use(cors({
 }))
 
 app.use("/api/auth",authRoutes)
+
+app.use("/api/user",userRoutes)
 
 app.listen(port,()=>{
     console.log("Hello from server",port);
