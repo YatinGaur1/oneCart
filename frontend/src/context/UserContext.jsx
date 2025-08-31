@@ -18,7 +18,7 @@ function UserContext({children}){
             
         }
     }
-     console.log(userData)
+
     let value={userData,setUserData,getCurrentUser}
     useEffect(()=>{
        getCurrentUser()
