@@ -14,7 +14,8 @@ function UserContext({children}){
            
         } catch (error) {
             setUserData(null)
-            console.log("error in getuser")
+            console.log("token error not correct/not exist")
+            console.log(error)
             
         }
     }
