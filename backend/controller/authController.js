@@ -1,7 +1,7 @@
 import User from "../model/userModel.js";
 import validator from "validator"
 import bcrypt from "bcryptjs"
-import genToken from "../config/token.js";
+import genToken, { genToken1 } from "../config/token.js";
 
 export const Register=async(req,res)=>{
     try {
@@ -123,4 +123,25 @@ export const googleLogin=async(req,res)=>{
 } catch (error) {
     return res.status(500).json({message: `login error ${error}`})
 }
+}
+
+export const adminLogin=async(req,res)=>{
+ try {
+    const{email,password}=req.body
+    if(email===process.env.ADMIN_EMAIL && password===process.env.ADMIN_PASSWORD){
+        let token =genToken1(email)
+         res.cookie("token1",token,{
+            httpOnly:true,
+            secure:false,
+            sameSite:"Strict",
+            maxAge:7*24*60*60*1000
+        }
+        
+    )
+    return res.status(200).json({message:"Login Successfully "})     
+    }
+    return res.status(400).json({message:"Invalid login credential"})
+ } catch (error) {
+    return res.status(500).json({message: `login error ${error}`})
+ }
 }

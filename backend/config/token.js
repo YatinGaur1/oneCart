@@ -7,4 +7,15 @@ try {
     console.log("Token Error",error)
 }
 }
+
+
+export const genToken1=async(email)=>{
+try {
+    let token= await jwt.sign({email},process.env.ADMIN_EMAIL,{expiresIn:"7d"})
+    return token
+} catch (error) {
+    console.log("Token1 Error",error)
+}
+}
+
 export default genToken
