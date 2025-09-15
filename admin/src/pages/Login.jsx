@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Logo from "../assets/logo.png";
 import { IoEyeOutline } from "react-icons/io5";
 import { IoEyeOff } from "react-icons/io5";
 import { axiosInstance } from "../utils/axios";
 import {useNavigate} from "react-router-dom"
+import { AdminDataContext } from "../context/AdminContext";
 
  const LoginPage = () => {
   let [show, setShow] = useState(false);
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
   let navigate = useNavigate() 
+  let {getAdmin}=useContext(AdminDataContext)
 
   const handleAdminLogin=async(e)=>{
     e.preventDefault()
@@ -18,6 +20,7 @@ import {useNavigate} from "react-router-dom"
       const result=await axiosInstance.post('/auth/adminLogin',{email,password})
       console.log(result.data)
       console.log("completed")
+      getAdmin()
       navigate('/')
     } catch (error) {
       console.log("error in server",error)

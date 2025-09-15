@@ -47,7 +47,7 @@ try {
         return res.status(404).json({message:"User not found"})
     }
     
-    const isMatch=await bcrypt.compare(password,user.password)
+    const isMatch= bcrypt.compare(password,user.password)
     if(!isMatch){
       return res.status(404).json({message:"password not correct"})
     }
@@ -129,8 +129,9 @@ export const adminLogin=async(req,res)=>{
  try {
     const{email,password}=req.body
     if(email===process.env.ADMIN_EMAIL && password===process.env.ADMIN_PASSWORD){
-        let token =genToken1(email)
-         res.cookie("token1",token,{
+        let token = await genToken1(email)
+        console.log(token)
+         res.cookie("token",token,{
             httpOnly:true,
             secure:false,
             sameSite:"Strict",
@@ -138,7 +139,7 @@ export const adminLogin=async(req,res)=>{
         }
         
     )
-    return res.status(200).json({message:"Login Successfully "})     
+    return res.status(200).json(token)     
     }
     return res.status(400).json({message:"Invalid login credential"})
  } catch (error) {

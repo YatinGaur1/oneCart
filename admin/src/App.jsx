@@ -5,9 +5,14 @@ import Add from './pages/Add.jsx'
 import Lists from './pages/Lists.jsx'
 import Orders from './pages/Orders.jsx'
 import Login from './pages/Login.jsx'
+import { useContext } from "react"
+import { AdminDataContext } from "./context/AdminContext.jsx"
+import LoginPage from "./pages/Login.jsx"
 function App() {
+  let {adminData}=useContext(AdminDataContext)
   return (
     <>
+    {!adminData?<LoginPage/> : <>
     <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/add' element={<Add/>}/>
@@ -16,6 +21,8 @@ function App() {
         <Route path='/login' element={<Login/>}/>
     </Routes>
     </>
+  }
+  </>  
   )
 }
 
