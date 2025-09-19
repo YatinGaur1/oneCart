@@ -43,7 +43,7 @@ const productSchema=new mongoose.Schema({
         required:true
     },
     date:{
-        type:Numer,
+        type:Number,
         required:true
     },
     bestSeller:{
