@@ -30,3 +30,24 @@ export const addProduct=async(req,res)=>{
         return res.status(500).json({message:`Addproduct Error ${error}`})
     }
 }
+
+export const getAllProduct=async(req,res)=>{
+    try {
+        const product =await Product.find({});
+        res.status(200).json(product)
+    } catch (error) {
+         console.log("getAllProduct Error")
+        return res.status(500).json({message:`getAllproductError ${error}`})
+    }
+}
+
+export const removeProduct=async(req,res)=>{
+    try {
+        let {id}=req.params;
+        const product =await Product.findByIdAndDelete(id)
+        res.status(200).json(product)
+    } catch (error) {
+          console.log("removeProduct Error")
+        return res.status(500).json({message:`removeproduct Error ${error}`})
+    }
+ }
