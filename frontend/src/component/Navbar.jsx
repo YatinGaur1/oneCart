@@ -64,17 +64,17 @@ function Navbar() {
        }}>Logout</li>:
         <li className='w-[100%] hover:bg-[#2f2f2f] px-[15px] py-[10px] cursor-pointer' onClick={()=>{navigate('/login');setShowProfile(false)}}>LogIn</li>}
         <li className='w-[100%] hover:bg-[#2f2f2f] px-[15px] py-[10px] cursor-pointer'>Orders</li>
-        <li className='w-[100%] hover:bg-[#2f2f2f] px-[15px] py-[10px] cursor-pointer'>About</li>
+        <li className='w-[100%] hover:bg-[#2f2f2f] px-[15px] py-[10px] cursor-pointer' onClick={()=>navigate('/about')}>About</li>
        </ul>
        </div>}
 
        <div className='w-[100vw] h-[80px] flex items-center justify-between px-[20px] fixed bottom-0 left-0 bg-[#191818] md:hidden'>
-         <button className=' text-[white]  text-[20px] flex items-center  flex-col justify-center gap-[5px]'><IoIosHome className='w-[30px] h-[30px] text-[white] md:hidden'/> Home</button>
+         <button className=' text-[white]  text-[20px] flex items-center  flex-col justify-center gap-[5px]'><IoIosHome className='w-[30px] h-[30px] text-[white] md:hidden' onClick={()=>navigate('/')}/> Home</button>
 
           <button className=' text-[white] text-[20px]  flex items-center justify-center flex-col gap-[5px]'><HiOutlineCollection
-          className='w-[30px] h-[30px] text-[white] md:hidden'/>Collection</button>
+          className='w-[30px] h-[30px] text-[white] md:hidden' onClick={()=>navigate('/collections')}/>Collection</button>
 
-           <button className=' text-[white] text-[20px] flex items-center justify-center flex-col gap-[5px]'><MdContacts className='w-[30px] h-[30px] text-[white] md:hidden'/>Contact</button>
+           <button className=' text-[white] text-[20px] flex items-center justify-center flex-col gap-[5px]'><MdContacts className='w-[30px] h-[30px] text-[white] md:hidden' onClick={()=>navigate('/contact')}/>Contact</button>
 
             <button className=' text-[white] text-[20px] flex items-center justify-center flex-col gap-[5px]'><FaCartShopping className='w-[30px] h-[30px] text-[white] md:hidden'/> Cart</button>
             
